@@ -1,23 +1,43 @@
 import { BarcodeScanningResult, CameraView, useCameraPermissions } from 'expo-camera/next';
 import { useEffect, useState } from 'react';
-import { Button, SafeAreaView, StyleSheet, TextInput, View, ActivityIndicator, FlatList, SectionList, StatusBar } from 'react-native';
+import { Button, SafeAreaView, StyleSheet, TextInput, View, ActivityIndicator, FlatList, SectionList, StatusBar, Text } from 'react-native';
 // import QRCode from 'qrcode';
 import QRCode from 'react-native-qrcode-svg';
 // import { Button } from '@rneui/themed';
+
+const DATA = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'First Item',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+  },
+];
+
+type ItemProps = { title: string };
+
+const Item = ({ title }: ItemProps) => (
+  <View style={styles.item}>
+    <Text style={styles.title}>{title}</Text>
+  </View>
+);
 
 export default function App() {
   const [permission, requestPermission] = useCameraPermissions();
   const [type, setType] = useState("back");
   const [showCamera, setShowCamera] = useState(true);
   const [text, setText] = useState('');
-  const [text1, setText1] = useState('');
-  const [text2, setText2] = useState('');
-  const [text3, setText3] = useState('');
   const [data, setData] = useState('https://softhub.ro');
-  const [DATA, setDATA] = useState([]);
-
   const codean = '1234567890';
   const [isLoading, setIsLoading] = useState(true);
+  const [someDATA, setDATAfetch] = useState([]);
+
 
 
   const gg = () => {
@@ -33,7 +53,7 @@ export default function App() {
       }
       const responseData = await response.json();
       console.log(responseData);
-      setDATA(responseData)
+      setDATAfetch(responseData)
       setIsLoading(false);
       console.log(isLoading);
     } catch (error) {
@@ -150,16 +170,12 @@ export default function App() {
       <Button title="Press Me" onPress={gg} />
       <Button title="GetData" onPress={fetchData} />
 
+      <FlatList
+        data={someDATA}
+        renderItem={({ item }) => <Item title={item.title} />}
+        keyExtractor={item => item.id}
+      />
 
-      <TextInput
-        value={text1}
-      />
-      <TextInput
-        value={text2}
-      />
-      <TextInput
-        value={text3}
-      />
     </SafeAreaView>
   );
 }
