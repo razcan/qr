@@ -13,14 +13,18 @@
     "expo": "~50.0.14",
     "expo-camera": "~14.1.2",
     "expo-status-bar": "~1.11.1",
+    "qrcode": "^1.5.3",
+    "qrjs": "^0.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.73.6",
     "react-native-camera": "^4.2.1",
+    "react-native-qrcode-svg": "^6.3.0",
     "react-native-web": "~0.19.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/qrcode": "^1.5.5",
     "@types/react": "~18.2.45",
     "typescript": "^5.1.3"
   },

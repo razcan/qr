@@ -16,3 +16,16 @@ npx expo start
 
 https://github.com/expo/expo/issues/26687
 https://github.com/stefan-schweiger?tab=repositories
+
+
+echo "# qr" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/razcan/qr.git
+git push -u origin main
+
+git remote add origin https://github.com/razcan/qr.git
+git branch -M main
+git push -u origin main
