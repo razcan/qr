@@ -1,25 +1,59 @@
 import { BarcodeScanningResult, CameraView, useCameraPermissions } from 'expo-camera/next';
 import { useEffect, useState } from 'react';
-import { Button, SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
+import { Button, SafeAreaView, StyleSheet, TextInput, View, ActivityIndicator, FlatList, SectionList, StatusBar } from 'react-native';
 // import QRCode from 'qrcode';
 import QRCode from 'react-native-qrcode-svg';
-
+// import { Button } from '@rneui/themed';
 
 export default function App() {
   const [permission, requestPermission] = useCameraPermissions();
   const [type, setType] = useState("back");
   const [showCamera, setShowCamera] = useState(true);
   const [text, setText] = useState('');
-  const [data, setData] = useState('https://example.com');
+  const [text1, setText1] = useState('');
+  const [text2, setText2] = useState('');
+  const [text3, setText3] = useState('');
+  const [data, setData] = useState('https://softhub.ro');
+  const [DATA, setDATA] = useState([]);
+
+  const codean = '1234567890';
+  const [isLoading, setIsLoading] = useState(true);
 
 
   const gg = () => {
     setData(text)
   }
+  console.log(isLoading);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const responseData = await response.json();
+      console.log(responseData);
+      setDATA(responseData)
+      setIsLoading(false);
+      console.log(isLoading);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     void requestPermission().then(console.log);
   }, []);
+
+  // if (isLoading) {
+  //   return (
+  //     <View>
+  //       <ActivityIndicator size="large" color="blue" />
+  //     </View>
+  //   );
+  // }
+
 
   if (!permission?.granted) {
     return null;
@@ -36,11 +70,46 @@ export default function App() {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setText(data);
-    console.log(
-      `Bar code with type ${type} and data ${data} has been scanned!`
-    );
+
+    if (data == 'exp://ac5c-86-127-162-187.ngrok-free.app') {
+      setText1('a');
+      setText2('b')
+      setText3('c')
+    }
+    else {
+      setText1('aaa');
+      setText2('bbb')
+      setText3('ccc')
+    }
+
+    // console.log(
+    //   `Bar code with type ${type} and data ${data} has been scanned!`
+    // );
 
   };
+
+  const DATA2 = [
+    {
+      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      title: 'First Item',
+    },
+    {
+      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+      title: 'Second Item',
+    },
+    {
+      id: '58694a0f-3da1-471f-bd96-145571e29d72',
+      title: 'Third Item',
+    },
+  ];
+  type ItemProps = { title: string };
+
+  const Item = ({ title }: ItemProps) => (
+    <View style={styles.item}>
+      <Text style={styles.title}>{title}</Text>
+    </View>
+  );
+
 
   return (
     <SafeAreaView>
@@ -69,14 +138,28 @@ export default function App() {
       >
 
       </CameraView>
-      <TextInput
+      <TextInput style={{ backgroundColor: '#f9c2ff', fontSize: 16, margin: 18, }}
         value={text}
       />
       <View style={styles.qrCodeContainer}>
         <QRCode value={data} size={200} />
       </View>
 
+
+
       <Button title="Press Me" onPress={gg} />
+      <Button title="GetData" onPress={fetchData} />
+
+
+      <TextInput
+        value={text1}
+      />
+      <TextInput
+        value={text2}
+      />
+      <TextInput
+        value={text3}
+      />
     </SafeAreaView>
   );
 }

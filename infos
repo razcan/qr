@@ -14,6 +14,8 @@ export EXPO_PACKAGER_PROXY_URL=https://eddd-86-127-162-187.ngrok-free.app
 aici se porneste aplicatia - scanare qr si este ok
 npx expo start
 
+https://docs.expo.dev/versions/latest/sdk/camera-next/#barcodesettings
+
 https://github.com/expo/expo/issues/26687
 https://github.com/stefan-schweiger?tab=repositories
 
